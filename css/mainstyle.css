@@ -46,14 +46,19 @@ font-family: 'Raleway', sans-serif;
     margin-top: 69px;
     background-color: black;
     text-align: center;
-    width: 1000px;
+  
     
   }
+
+.buttonn{
+
+
+}
 
 
   .button {
     display: inline-block;
-    border-radius: 4px;
+   border-radius: 4px;
     background-color: #FFA8A8;
     border: none;
     color: #FFFFFF;
@@ -61,9 +66,14 @@ font-family: 'Raleway', sans-serif;
     font-size: 28px;
     padding: 20px;
     width: 200px;
-    transition: all 0.5s;
+     transition: all 0.5s;
     cursor: pointer;
-    margin: 5px;
+    margin: 70px;
+    position: relative;
+    
+    margin-left: 30%;
+
+   
   }
   
   .button span {
@@ -91,12 +101,10 @@ font-family: 'Raleway', sans-serif;
     right: 0;
   }
 
-  .button{
-    margin: 30px 45%;
-  }
+
 
 .into{
- width: 50%;
+  width: 50%;
 
  margin:0 auto;
 }
@@ -140,8 +148,8 @@ form{
 }
 
 .maintest h1{
-  padding: 80vh 50vh;
-  
+ 
+  padding: 75vh 0vh;
   color: white;
   font-size:70px ;
 
@@ -161,4 +169,63 @@ form{
   font-size:70px ;
 
 
+}
+
+/*----deslop----------------------*/
+@media only screen and (min-width: 768px) {
+  /* For tablets: */
+
+  .button {
+    display: inline-block;
+   border-radius: 4px;
+    background-color: #FFA8A8;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 28px;
+    padding: 20px;
+    width: 200px;
+     transition: all 0.5s;
+    cursor: pointer;
+    margin: 70px;
+    position: relative;
+    
+    margin-left: 45%;
+
+   
+  }
+  
+
+
+  
+}
+
+
+/*----moble----*/
+@media only screen and (min-width: 600px) {
+  /* For tablets: */
+
+  .button {
+    display: inline-block;
+   border-radius: 4px;
+    background-color: #FFA8A8;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 28px;
+    padding: 20px;
+    width: 200px;
+     transition: all 0.5s;
+    cursor: pointer;
+    margin: 70px;
+    position: relative;
+    
+    margin-left: 43%;
+
+   
+  }
+  
+
+
+  
 }

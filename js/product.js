@@ -79,7 +79,6 @@ window.onload = function() {
             oDiv.innerHTML += '<div class="ctrl left"><a rel="nofollow" href="javascript:;">X</a></div>';
 
             oCar.appendChild(oDiv);
-            var flag = true;
             var check = oDiv.firstChild.getElementsByTagName("i")[0];
             check.onclick = function() {
                 // console.log(check.className);
@@ -99,7 +98,6 @@ window.onload = function() {
                     number--;
                     getAmount();
                 }
-            
             }
             var i_btn = document.getElementsByClassName("count_i");
             for (var k = 0; k < i_btn.length; k++) {
@@ -195,6 +193,144 @@ function checkAll() {
     getAmount();
 }
 
+// local storage
+var cartArea = document.querySelector('#car')
+var itemDiv = document.createElement('div')
+
+
+const retrieved =()=>{
+    const storage = localStorage.getItem('cartItem');
+    const storageItem = (JSON.parse(storage))
+    console.log(storageItem)
+
+    var itemDiv = document.createElement("div");
+
+    for (let i=0; i<storageItem.length; i++) {
+        //console.log(`${property}: ${storageItem[property]}`);
+        console.log('storage: '+storage)
+
+        const itemDiv = document.createElement('div')
+        //innerHTML into cartArea
+        itemDiv.className = "flex-container hid";
+        itemDiv.innerHTML += '<div class="check left"> <i class="i_check" id="i_check" onclick="i_check()" >√</i></div>';
+        itemDiv.innerHTML += `<div class="img left"><img src="${storageItem[i].ProductUrl}" ></div>`;
+        itemDiv.innerHTML += `<div class="name left"><span> ${storageItem[i].ProductName} </span></div>`;
+        itemDiv.innerHTML += `<div class="price left"><span> ${storageItem[i].productPrice} 元</span></div>`;
+        itemDiv.innerHTML +=' <div class="item_count_i"><div class="num_count"><div class="count_d">-</div><div class="c_num">1</div><div class="count_i">+</div></div></div>'
+        itemDiv.innerHTML += `<div class="subtotal left"><span> ${storageItem[i].productPrice} 元</span></div>`;
+        itemDiv.innerHTML += '<div class="ctrl left removeStorage"><a rel="nofollow" href="javascript:;">X</a></div>';
+        
+        // itemDiv.appendChild(newContent);
+        cartArea.appendChild(itemDiv)
+        // console.log(itemDiv.innerHTML + property)
+
+        var check = itemDiv.firstChild.getElementsByTagName("i")[0];
+        check.onclick = function() {
+            // console.log(check.className);
+            if (check.className == "i_check i_acity") {
+                check.classList.remove("i_acity");
+            } else {
+                check.classList.add("i_acity");
+            }
+            getAmount();
+        }
+
+        //remove local storage
+        var removeStorage = itemDiv.lastChild.getElementsByTagName("a")[0];
+        removeStorage.onclick = function() {
+            var result = confirm("確定刪除嗎?");
+            if (result) {
+                cartArea.removeChild(itemDiv);
+                number--;
+                getAmount();
+            }
+        }
+
+
+        //remove local storage
+        var removeStorage = document.querySelectorAll('.removeStorage')
+        console.log('removeStorage: '+removeStorage)
+
+        //const storage = localStorage.getItem('cartItem');
+        //const storageItem = (JSON.parse(storage))
+
+        /* for(let i=0; i<removeStorage.length; i++){
+            removeBtn[i].addEventListener('click', ()=>{
+                var result = confirm("確定刪除嗎?");
+                if (result) {
+                    window.localStorage.removeItem(removeStorage[i]);
+                    cartArea.removeChild(itemDiv)
+                    retrieved();
+                }
+            })
+        } */
+
+        removeStorage.forEach(removeBtn => {
+            removeBtn.addEventListener('click', ()=>{
+                var result = confirm("確定刪除嗎?");
+                if (result) {
+                    window.localStorage.removeItem('cartItem');
+                    cartArea.removeChild(itemDiv)
+                    console.log(storageItem)
+                    retrieved();
+                }
+            })
+        });
+
+        var i_btn = document.getElementsByClassName("count_i");
+        for (var k = 0; k < i_btn.length; k++) {
+            i_btn[k].onclick = function() {
+                bt = this;
+                //小計
+                at = this.parentElement.parentElement.nextElementSibling;
+                //單價
+                pt = this.parentElement.parentElement.previousElementSibling;
+                //數量值
+                node = bt.parentNode.childNodes[1];
+                //console.log(node);
+                num = node.innerText;
+                num = parseInt(num);
+                num++;
+                node.innerText = num;
+                //單價
+                price = pt.innerText;
+                price = price.substring(0, price.length - 1);
+                //計算小計值
+                at.innerText = price * num + '元';
+                //計算總計值
+                getAmount();
+            }
+        }
+
+        //獲取所有數量減號按鈕
+        var d_btn = document.getElementsByClassName("count_d");
+        for (k = 0; k < i_btn.length; k++) {
+            d_btn[k].onclick = function() {
+                bt = this;
+                //小計
+                at = this.parentElement.parentElement.nextElementSibling;
+                //單價
+                pt = this.parentElement.parentElement.previousElementSibling;
+                //c_num節點
+                node = bt.parentNode.childNodes[1];
+                num = node.innerText;
+                num = parseInt(num);
+                if (num > 1) {
+                    num--;
+                }
+                node.innerText = num;
+                //單價
+                price = pt.innerText;
+                price = price.substring(0, price.length - 1);
+                //計算小計值		
+                at.innerText = price * num + '元';
+                //計算總計值
+                getAmount();
+            }
+        }
+    }
+}
+
 //價值合計
 function getAmount() {
     // console.log(ys);
@@ -212,31 +348,5 @@ function getAmount() {
     }
 }
 
-// local storage
-var cartArea = document.querySelector('#car')
-
-const get =()=>{
-    const storage = localStorage.getItem('cartItem');
-    console.log(JSON.parse(storage))
-}
-
-cartArea.addEventListener('click', get)
-
-get()
-
-//innerHTML into cartArea
-
-//if(find DOM){
-//  update
-//}
-//else{
-//  X update
-//}
-
-
-//
-/* for (const property in products) {
-    console.log(`${property}: ${products[property]}`);
-} */
-
-/* localStorage.removeItem('myCat'); */
+retrieved()
+window.addEventListener("storage", retrieved);
